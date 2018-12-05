@@ -51,7 +51,7 @@ def process_template(args, config, template_path, service_reloads):
   # This renders the template, but also makes outputs from the template
   # available to us through |module|.
   module = template.make_module(vars=config)
-  rendered = str(module)
+  rendered = str(module).strip() + '\n'
 
   if args.stdout:
     print(rendered)

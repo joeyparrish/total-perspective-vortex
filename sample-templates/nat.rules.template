@@ -43,5 +43,3 @@ COMMIT
 
 # Commit the NAT rules
 COMMIT
-
-# Do not delete this line, or jinja will create a file without a newline after COMMIT
