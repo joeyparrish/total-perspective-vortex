@@ -1,0 +1,50 @@
+# Sample total-perspective-vortex config file for a router & firewall.
+
+# This is a fictional example of the kind of settings you might want to be able
+# to configure a local DNS server, DHCP server, and iptables firewall.
+
+# This matches the templates in the sample-templates folder, but your config
+# files and templates can use any names and structure you like.
+
+# There are only two reserved names:
+#  - output_path
+#  - service_reload
+# See docs for more details.
+
+
+wan_interface: eth0
+lan_interface: eth1
+
+lan_ip_range: 192.168.0.0/24
+lan_netmask: 255.255.255.0
+
+lan_dhcp_ip_start: 192.168.0.100
+lan_dhcp_ip_end: 192.168.0.199
+
+router_name: my-router
+router_ip: 192.168.0.1
+
+devices:
+  linux-desktop:
+    mac: "ab:cd:12:34:ff:ca"
+    ip: 192.168.0.2
+
+  laptop:
+    mac: "ab:cd:12:34:ff:79"
+    ip: 192.168.0.20
+
+  smart-tv:
+    mac: "ab:cd:12:34:ff:16"
+    ip: 192.168.0.21
+
+
+port_forwards:
+  ssh:
+    wan_port: 2822
+    lan_ip: linux-desktop
+    lan_port: 22
+
+  http:
+    wan_port: 2880
+    lan_ip: linux-desktop
+    lan_port: 80

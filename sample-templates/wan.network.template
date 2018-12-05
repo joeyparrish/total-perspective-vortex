@@ -1,0 +1,13 @@
+{% set output_path = '/etc/systemd/network/wan.network' %}
+{% set service_reload = 'systemctl reload-or-restart systemd-networkd' %}
+[Match]
+Name={{ wan_interface }}
+
+[Network]
+ConfigureWithoutCarrier=true
+DHCP=ipv4
+
+[DHCP]
+UseMTU=true
+RouteMetric=100
+

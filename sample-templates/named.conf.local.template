@@ -1,0 +1,16 @@
+{% set output_path = '/etc/bind/named.conf.local' %}
+{% set service_reload = 'systemctl reload-or-restart bind9' %}
+//
+// Do any local configuration here
+//
+
+zone "home" {
+	type master;
+	file "/etc/bind/db.home";
+};
+
+{% set reverse_domain = lan_ip_range.split('.')[0:3]|reverse()|join('.') %}
+zone "{{ reverse_domain }}.in-addr.arpa" {
+	type master;
+	file "/etc/bind/db.home.reverse";
+};

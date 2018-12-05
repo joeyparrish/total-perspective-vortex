@@ -1,0 +1,49 @@
+#!/bin/sh
+{% set output_path = '/etc/ufw/after.init' %}
+{% set service_reload = 'chmod 700 /etc/ufw/after.init && ufw enable && ufw reload' %}
+#
+# after.init: if executable, called by ufw-init. See 'man ufw-framework' for
+#             details. Note that output from these scripts is not seen via the
+#             the ufw command, but instead via ufw-init.
+#
+# Copyright 2013 Canonical Ltd.
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License version 3,
+#    as published by the Free Software Foundation.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+set -e
+
+case "$1" in
+start)
+    # add in custom NAT rules, but don't overwrite existing rules (-n)
+    iptables-restore -n < /etc/ufw/nat.rules
+    ;;
+stop)
+    # flush all rules and chains
+    iptables -t nat -F
+    iptables -t nat -X
+    iptables -F
+    iptables -X
+    # avoid opening this router to the wide internet
+    iptables -P INPUT DROP
+    ;;
+status)
+    # optional
+    ;;
+flush-all)
+    # optional
+    ;;
+*)
+    echo "'$1' not supported"
+    echo "Usage: after.init {start|stop|flush-all|status}"
+    ;;
+esac

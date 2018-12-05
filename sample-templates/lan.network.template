@@ -1,0 +1,9 @@
+{% set output_path = '/etc/systemd/network/lan.network' %}
+{% set service_reload = 'systemctl reload-or-restart systemd-networkd' %}
+[Match]
+Name={{ lan_interface }}
+
+[Network]
+ConfigureWithoutCarrier=true
+Address={{ router_ip }}/{{ lan_ip_range.split('/')[1] }}
+

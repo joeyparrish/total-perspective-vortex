@@ -1,0 +1,47 @@
+{% set output_path = '/etc/ufw/nat.rules' %}
+{% set service_reload = 'ufw enable && ufw reload' %}
+# nat.rules
+#
+# Rules that should be run after ufw is initialized, to set up NAT.
+# This is a custom UFW config for this machine, which must be used with
+# "iptables-restore -n" to avoid erasing standard UFW rules.
+
+# Filter rules
+*filter
+:ufw-user-input - [0:0]
+# Do not use -F to flush here!  UFW already flushed before writing its rules,
+# and we want to let UFW rules stay.
+
+# Trust all local traffic
+-A ufw-user-input -i {{ lan_interface }} -s {{ lan_ip_range }} -j ACCEPT
+
+# Commit the filter rules
+COMMIT
+
+
+# NAT rules
+*nat
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:ufw-user-port-forwards - [0:0]
+# Flush any existing NAT rules
+-F
+-A PREROUTING -i {{ wan_interface }} -j ufw-user-port-forwards
+-A POSTROUTING -s {{ lan_ip_range }} -o {{ wan_interface }} -j MASQUERADE
+
+{% for name, spec in port_forwards.items() -%}
+{%- set ip = (devices[spec.lan_ip]|default({'ip': spec.lan_ip})).ip -%}
+{%- set lan_port = (spec.lan_port|default(spec.wan_port)|string).split('-')[0] -%}
+{%- set wan_port = spec.wan_port|replace('-', ':') -%}
+{%- set protocol_list = (spec.protocol|default('tcp')|replace('both', 'tcp,udp')).split(',') -%}
+
+# Forward ports for {{ name }}
+{% for protocol in protocol_list -%}
+-A ufw-user-port-forwards -p {{ protocol }} --dport {{ wan_port }} -j DNAT --to-destination {{ ip }}:{{ lan_port }}
+{% endfor %}
+{% endfor -%}
+
+# Commit the NAT rules
+COMMIT
+
+# Do not delete this line, or jinja will create a file without a newline after COMMIT

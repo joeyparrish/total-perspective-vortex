@@ -1,0 +1,22 @@
+{% set output_path = '/etc/bind/db.home.reverse' %}
+{% set service_reload = 'systemctl reload-or-restart bind9' %}
+$ORIGIN .
+$TTL 86400	; 1 day
+home			IN SOA	{{ router_name }}.home. bodhisattva.home. (
+				1263527841 ; serial
+				10800      ; refresh (3 hours)
+				3600       ; retry (1 hour)
+				604800     ; expire (1 week)
+				38400      ; minimum (10 hours 40 minutes)
+				)
+			NS	{{ router_name }}.home.
+
+$ORIGIN home.
+
+{{ router_name }}		A	{{ router_ip }}
+
+$TTL 300	; 5 minutes
+
+{% for name, specs in devices.items() %}
+{{ name }}	A	{{ specs.ip }}
+{% endfor %}

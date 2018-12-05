@@ -1,0 +1,38 @@
+{% set output_path = '/etc/dhcp/dhcpd.conf' %}
+{% set service_reload = 'dhcpd -t && systemctl reload-or-restart isc-dhcp-server' %}
+
+default-lease-time 600;
+max-lease-time 600;
+
+# The ddns-updates-style parameter controls whether or not the server will
+# attempt to do a DNS update when a lease is confirmed. We default to the
+# behavior of the version 2 packages ('none', since DHCP v2 didn't
+# have support for DDNS.)
+ddns-update-style none;
+
+# If this DHCP server is the official DHCP server for the local
+# network, the authoritative directive should be uncommented.
+authoritative;
+
+allow unknown-clients;
+use-host-decl-names on;
+
+subnet {{ lan_ip_range.split('/')[0] }} netmask {{ lan_netmask }} {
+	range {{ lan_dhcp_ip_start }} {{ lan_dhcp_ip_end }};
+	option subnet-mask {{ lan_netmask }};
+	option routers {{ router_ip }};
+	option domain-name-servers {{ router_ip }};
+	option domain-name "home";
+	ddns-domainname "home.";
+	ddns-rev-domainname "in-addr.arpa.";
+}
+
+{% for name, specs in devices.items() %}
+
+host {{ name }}.home {
+	hardware ethernet {{ specs.mac }};
+	fixed-address {{ specs.ip }};
+	ddns-hostname "{{ name }}";
+}
+
+{% endfor %}
