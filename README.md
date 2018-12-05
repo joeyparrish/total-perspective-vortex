@@ -10,13 +10,27 @@ Copyright (C) 2018 Joey Parrish <joey.parrish@gmail.com>
 Released under the GNU GPL v3 license.
 
 
+## Why?
+
+I built a Linux router and firewall at home, but I didn't like any of the
+web-based router management interfaces I looked at.  So I decided that I wanted
+to maintain it over SSH with a text editor.  I also didn't want to duplicate
+information about hosts in multiple config files for multiple services (DHCP &
+DNS, for example).  I wanted one place to put host metadata and one command to
+update everything.
+
+What I built is more generic than that, though.  You can use it to generate
+config files for anything and reload any service with any command afterward.
+
+
 ## Quick Installation
 
 ```sh
 cp total-perspective-vortex /usr/local/bin/
 mkdir /etc/total-perspective-vortex/
 # Now read sample-config.yaml and sample-templates/ and take what you need
-# for your own setup in /etc/total-perspective-vortex/
+# for your own setup in /etc/total-perspective-vortex/ .  Make up your own
+# templates as needed.
 ```
 
 
