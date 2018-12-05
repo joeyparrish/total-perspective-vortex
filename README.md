@@ -51,6 +51,9 @@ templates folder, combine it with your YAML config data, and generate output.
 The template files can contain actual logic to transform the input data, loop
 over it for repeated configs, and provide additional information as output.
 
+Template files use the Jinja2 template engine, so you will want to get familiar
+with the Jinja documentation here: http://jinja.pocoo.org/docs/
+
 The default location for the templates folder is
 `/etc/total-perspective-vortex/templates`, and you can override that with the
 `-t` option.
