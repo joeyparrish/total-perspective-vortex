@@ -9,7 +9,7 @@
 # There are only two reserved names:
 #  - output_path
 #  - service_reload
-# See docs for more details.
+# See README.md for more details.
 
 
 wan_interface: eth0
