@@ -56,7 +56,6 @@ def process_template(args, config, template_path, service_reloads):
   if args.stdout:
     print(str(module))
 
-  # TODO: DOCUMENT THIS
   output_path = getattr(module, 'output_path', None)
   service_reload = getattr(module, 'service_reload', None)
 
