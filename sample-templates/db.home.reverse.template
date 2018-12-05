@@ -1,4 +1,4 @@
-{% set output_path = '/etc/bind/db.home' %}
+{% set output_path = '/etc/bind/db.home.reverse' %}
 {% set service_reload = 'systemctl reload-or-restart bind9' %}
 $ORIGIN .
 $TTL 86400	; 1 day
