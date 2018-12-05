@@ -6,8 +6,9 @@
 # This matches the templates in the sample-templates folder, but your config
 # files and templates can use any names and structure you like.
 
-# There are only two reserved names:
+# There are only three reserved names:
 #  - output_path
+#  - output_mode
 #  - service_reload
 # See README.md for more details.
 
