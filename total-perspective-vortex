@@ -86,7 +86,7 @@ def process_reloads(args, service_reloads):
       print('Reloading: %s' % service_reload, file=sys.stderr)
       subprocess.check_call(service_reload, shell=True)
 
-def main():
+def main(argv):
   # TODO: fix description formatting
   parser = argparse.ArgumentParser(description=__doc__)
   parser.add_argument('--template-folder', '-t', default=DEFAULT_TEMPLATE_FOLDER,
@@ -100,7 +100,8 @@ def main():
                       help='Write rendered templates to stdout. ' +
                            'Implies --dry-run.')
 
-  args = parser.parse_args()
+  args = parser.parse_args(argv)
+
   config = get_config(args)
   service_reloads = set()
 
@@ -108,4 +109,4 @@ def main():
   process_reloads(args, service_reloads)
 
 if __name__ == '__main__':
-  main()
+  main(sys.argv)
