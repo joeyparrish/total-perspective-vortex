@@ -57,6 +57,7 @@ def process_template(args, config, template_path, service_reloads):
     print(rendered)
 
   output_path = getattr(module, 'output_path', None)
+  output_mode = int(getattr(module, 'output_mode', '644'), 8)
   service_reload = getattr(module, 'service_reload', None)
 
   if not output_path:
@@ -69,6 +70,7 @@ def process_template(args, config, template_path, service_reloads):
     if output_path:
       with open(output_path, 'wb') as f:
         f.write(rendered.encode('utf-8'))
+      os.chmod(output_path, output_mode)
 
     if service_reload:
       service_reloads.add(service_reload)

@@ -48,8 +48,9 @@ whatever else you are configuring.  The structure and contents of the file is
 completely arbitrary, but it contains only static data, not logic.
 
 You can put whatever you want in that file using any names you like, except for
-the two reserved names used by the Total Perspective Vortex in template files:
+the three reserved names used by the Total Perspective Vortex in template files:
   - output_path
+  - output_mode
   - service_reload
 
 The default location for the config file is
@@ -72,13 +73,32 @@ The default location for the templates folder is
 `/etc/total-perspective-vortex/templates`, and you can override that with the
 `-t` option.
 
-Each template can set two reserved variables as output to the tool:
+Each template can set three reserved variables as output to the tool:
 
 ### output_path
 
-The output_path variable is required to be set in each template.  This tells
+The output_path variable is **required** to be set in each template.  This tells
 the Total Perspective Vortex where to put the generated output from the
 template.
+
+Example:
+
+```jinja2
+{% set output_path = '/etc/bind/db.home' %}
+```
+
+### output_mode
+
+The output_mode variable is optional.  If present, it tells the Total
+Perspective Vortex what file mode to set on the output.  If missing, it will
+default to `0644` (world-readable, not executable).  The values for output_mode
+should be expressed in octal, but should be set as a string in the template.
+
+Example:
+
+```jinja2
+{% set output_mode = '700' %}
+```
 
 ### service_reload
 
@@ -89,3 +109,9 @@ the output.
 Service reloading happens after all templates have been processed and all output
 has been generated.  If two templates contain identical reload commands, the
 command will only be executed once.
+
+Example:
+
+```jinja2
+{% set service_reload = 'ufw enable && ufw reload' %}
+```

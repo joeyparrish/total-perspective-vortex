@@ -1,6 +1,7 @@
 #!/bin/sh
 {% set output_path = '/etc/ufw/after.init' %}
-{% set service_reload = 'chmod 700 /etc/ufw/after.init && ufw enable && ufw reload' %}
+{% set service_reload = 'ufw enable && ufw reload' %}
+{% set output_mode = '700' %}
 #
 # after.init: if executable, called by ufw-init. See 'man ufw-framework' for
 #             details. Note that output from these scripts is not seen via the
