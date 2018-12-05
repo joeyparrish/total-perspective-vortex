@@ -98,7 +98,7 @@ def main(argv):
                       help='Write rendered templates to stdout. ' +
                            'Implies --dry-run.')
 
-  args = parser.parse_args(argv)
+  args = parser.parse_args(argv[1:])
 
   config = get_config(args)
   service_reloads = set()
