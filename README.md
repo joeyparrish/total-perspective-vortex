@@ -36,8 +36,9 @@ mkdir /etc/total-perspective-vortex/
 
 ## Usage
 
-1. Modify YAML config file
-2. Run `sudo total-perspective-vortex` to generate output from templates and
+1. Modify YAML config file.
+2. Run `sudo total-perspective-vortex --diff` to see a diff of what will change.
+3. Run `sudo total-perspective-vortex` to generate output from templates and
    reload services.
 
 
