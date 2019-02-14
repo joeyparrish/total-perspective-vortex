@@ -27,6 +27,12 @@ import subprocess
 import sys
 import yaml
 
+MIN_PYTHON_VERSION = (3, 6)
+MIN_PYTHON_VERSION_STR = '.'.join([str(x) for x in MIN_PYTHON_VERSION])
+if sys.version_info[0:2] < MIN_PYTHON_VERSION:
+  print('Total Perspective Vortex requires Python v%s+!' % MIN_PYTHON_VERSION_STR)
+  sys.exit(1)
+
 DEFAULT_TEMPLATE_FOLDER = '/etc/total-perspective-vortex/templates'
 DEFAULT_CONFIG_FILE = '/etc/total-perspective-vortex/config.yaml'
 
