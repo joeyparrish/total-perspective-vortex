@@ -70,7 +70,7 @@ def process_template(args, config, template_path, service_reloads):
     print('No service reload specified in %s' % template_path, file=sys.stderr)
 
   if args.diff:
-    subprocess.run(['diff', '-u', output_path, '-'],
+    subprocess.run(['diff', '-Nu', output_path, '-'],
                    input=rendered.encode('utf8'))
   elif args.stdout:
     print(rendered)
