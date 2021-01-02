@@ -31,7 +31,7 @@ COMMIT
 
 {% for name, spec in port_forwards.items() -%}
 {%- set ip = (devices[spec.lan_ip]|default({'ip': spec.lan_ip})).ip -%}
-{%- set lan_port = (spec.lan_port|default(spec.wan_port)|string).split('-')[0] -%}
+{%- set lan_port = spec.lan_port|default(spec.wan_port) -%}
 {%- set wan_port = spec.wan_port|replace('-', ':') -%}
 {%- set protocol_list = (spec.protocol|default('tcp')|replace('both', 'tcp,udp')).split(',') -%}
 
