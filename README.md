@@ -1,11 +1,11 @@
 # Total Perspective Vortex
 
-![Total Perspective Vortex Logo](logo/logo.png)
-
 Configures services based on templates and a YAML config file, just like the
 name suggests!
 
 Designed with routers and local networks in mind.
+
+![Total Perspective Vortex Logo](logo/logo.png)
 
 Copyright (C) 2018 Joey Parrish <joey.parrish@gmail.com>
 
