@@ -1,5 +1,7 @@
 # Total Perspective Vortex
 
+![Total Perspective Vortex Logo](logo/logo.png)
+
 Configures services based on templates and a YAML config file, just like the
 name suggests!
 
@@ -116,3 +118,13 @@ Example:
 ```jinja2
 {% set service_reload = 'ufw enable && ufw reload' %}
 ```
+
+## Logo
+
+The Total Perspective Vortex logo is based on
+["Cupcake (34)"](https://www.svgrepo.com/svg/65988/cupcake)
+by ["SVG Repo"](https://www.svgrepo.com/)
+(License: [CC0](https://www.svgrepo.com/page/licensing))
+
+The path is repeated using SVG defs, generated from a script.
+See [logo/gen.py](https://github.com/joeyparrish/total-perspective-vortex/blob/main/logo/gen.py)
