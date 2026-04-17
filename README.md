@@ -5,9 +5,10 @@ name suggests!
 
 Designed with routers and local networks in mind.
 
-![Total Perspective Vortex Logo](logo/logo.png)
+![Total Perspective Vortex Logo](logo/logo.png#gh-light-mode-only)
+![Total Perspective Vortex Logo](logo/logo-dark.png#gh-dark-mode-only)
 
-Copyright (C) 2018 Joey Parrish <joey.parrish@gmail.com>
+Copyright (C) 2018-2026 Joey Parrish <joey.parrish@gmail.com>
 
 Released under the GNU GPL v3 license.
 
