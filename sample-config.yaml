@@ -49,3 +49,10 @@ port_forwards:
     wan_port: 2880
     lan_ip: linux-desktop
     lan_port: 80
+
+  sip:
+    protocol: udp
+    wan_ip: 1.1.1.1  # Only allowed in from this source IP or range
+    wan_port: 5060
+    lan_ip: linux-desktop
+    lan_port: 5060

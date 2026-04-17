@@ -37,7 +37,7 @@ COMMIT
 
 # Forward ports for {{ name }}
 {% for protocol in protocol_list -%}
--A ufw-user-port-forwards -p {{ protocol }} --dport {{ wan_port }} -j DNAT --to-destination {{ ip }}:{{ lan_port }}
+-A ufw-user-port-forwards -p {{ protocol }} --dport {{ wan_port }}{% if spec.wan_ip is defined %} -s {{ spec.wan_ip }}{% endif %} -j DNAT --to-destination {{ ip }}:{{ lan_port }}
 {% endfor %}
 {% endfor -%}
 
