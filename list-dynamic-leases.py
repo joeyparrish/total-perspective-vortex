@@ -28,12 +28,13 @@ import sys
 
 
 def parse_dhcp_time(dhcp_time):
-  return datetime.datetime.strptime(dhcp_time, '%Y/%m/%d %H:%M:%S')
+  # Lease files store times in UTC; append tzinfo since strptime produces naive datetimes.
+  return datetime.datetime.strptime(dhcp_time, '%Y/%m/%d %H:%M:%S').replace(tzinfo=datetime.timezone.utc)
 
 
 def parse_leases(lease_file_path, delta=datetime.timedelta(minutes=0)):
   leases = {}
-  now = datetime.datetime.utcnow()
+  now = datetime.datetime.now(datetime.timezone.utc)
 
   with open(lease_file_path, 'rb') as f:
     new_lease = None
@@ -41,10 +42,10 @@ def parse_leases(lease_file_path, delta=datetime.timedelta(minutes=0)):
     for line in f:
       line = line.decode('utf-8')
 
-      if re.search('^\s*(?:#.*)?$', line):
+      if re.search(r'^\s*(?:#.*)?$', line):
         continue
 
-      words = re.split('\s+', line.strip().strip(';'))
+      words = re.split(r'\s+', line.strip().strip(';'))
       if not new_lease:
         if words[0] == 'lease':
           new_lease = { 'ip': words[1], 'name': None }
