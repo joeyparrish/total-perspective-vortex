@@ -23,6 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import argparse
 import jinja2
 import os
+import re
 import subprocess
 import sys
 import yaml
@@ -36,11 +37,24 @@ if sys.version_info[0:2] < MIN_PYTHON_VERSION:
 DEFAULT_TEMPLATE_FOLDER = '/etc/total-perspective-vortex/templates'
 DEFAULT_CONFIG_FILE = '/etc/total-perspective-vortex/config.yaml'
 
+# Copies of config files that dpkg and ucf leave behind when an update to a
+# packaged template conflicts with local edits, such as foo.template.dpkg-old
+# or foo.template.ucf-dist.  These usually set the same output_path as the real
+# template, so rendering them too could overwrite its output with a stale one.
+PACKAGE_LEFTOVER_RE = re.compile(r'\.(dpkg|ucf)-[a-z]+$')
+
 def get_templates(args):
   for template in os.listdir(args.template_folder):
     # Skip hidden files and swap files, so that you can edit templates
     # and reprocess them rapidly.
     if template[0] == '.': continue
+
+    # Skip leftovers from package updates, but say so, so that they get
+    # noticed and cleaned up.
+    if PACKAGE_LEFTOVER_RE.search(template):
+      print('Skipping package manager leftover %s' %
+            os.path.join(args.template_folder, template), file=sys.stderr)
+      continue
 
     yield os.path.join(args.template_folder, template)
 

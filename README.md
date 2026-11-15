@@ -77,6 +77,12 @@ The default location for the templates folder is
 `/etc/total-perspective-vortex/templates`, and you can override that with the
 `-t` option.
 
+Hidden files (names starting with `.`), such as editor swap files, are ignored.
+So are copies that package managers leave behind when an update to a packaged
+template conflicts with your edits, such as `foo.template.dpkg-old` or
+`foo.template.ucf-dist`.  These are skipped with a message, since they usually
+mean there is something to merge and clean up.
+
 Each template can set three reserved variables as output to the tool:
 
 ### output_path
